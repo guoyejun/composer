@@ -1934,7 +1934,11 @@ class Trainer:
 
         use_grad_scaling = self._use_grad_scaling(self.state.precision, self.state.scaler)
 
-        if self.spin_dataloaders:
+        if self.spin_dataloaders:            
+            data_dst = os.getcwd()
+            data_src = os.environ.get("DS_PATH")
+            cmd = f"cp -arf {data_src} {data_dst}/"
+            os.system(cmd)
             self._spin_dataloaders_to_cur_epoch()
 
         if self.state.timestamp.batch_in_epoch == 0 and self._rng_state is not None:
